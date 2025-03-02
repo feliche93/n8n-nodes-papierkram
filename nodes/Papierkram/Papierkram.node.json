@@ -18,35 +18,45 @@
     ],
     "properties": [
       {
-        "displayName": 'Operation',
-        "name": 'operation',
-        "type': 'options',
+        "displayName": 'Resource',
+        "name": 'resource',
+        "type": 'options',
         "noDataExpression": true,
         "options": [
           {
-            "name": 'Get Company',
-            "value": 'getCompany',
-            "description": 'Get a company',
-            "routing": {
-              "request": {
-                "method": "GET",
-                "url": '/contact/companies/{id}',
-              }
-            }
-          },
-          {
-            "name": 'List Companies',
-            "value": 'listCompanies',
-            "description": 'List all companies',
-            "routing": {
-              "request": {
-                "method": "GET",
-                "url": '/contact/companies',
-              }
-            }
+            "name": 'Company',
+            "value": 'company',
           },
         ],
-        "default": 'listCompanies',
+        "default": 'company',
+      },
+      {
+        "displayName": 'Operation',
+        "name": 'operation',
+        "type": 'options',
+        "noDataExpression": true,
+        "displayOptions": {
+          "show": {
+            "resource": [
+              "company",
+            ]
+          }
+        },
+        "options": [
+          {
+            "name": 'Get',
+            "value": 'get',
+            "description": 'Get a company',
+            "action": 'Get a company',
+          },
+          {
+            "name": 'List',
+            "value": 'list',
+            "description": 'List all companies',
+            "action": 'List companies',
+          },
+        ],
+        "default": 'list',
       },
 		{
 			displayName: 'Company ID',
@@ -57,8 +67,11 @@
 			required: true,
 			displayOptions: {
 				show: {
+          "resource": [
+            "company",
+          ],
 					operation: [
-						'getCompany',
+						'get',
 					],
 				},
 			},
@@ -70,9 +83,12 @@
         "default": 1,
         "description": 'Page number',
 			displayOptions: {
+          "resource": [
+            "company",
+          ],
 				show: {
 					operation: [
-						'listCompanies',
+						'list',
 					],
 				},
 			},
@@ -84,9 +100,12 @@
         "default": 100,
         "description": 'Page size (1-100)',
 			displayOptions: {
+          "resource": [
+            "company",
+          ],
 				show: {
 					operation: [
-						'listCompanies',
+						'list',
 					],
 				},
 			},
@@ -98,9 +117,12 @@
         "default": '',
         "description": 'Order by field (must be used with order_direction)',
 			displayOptions: {
+          "resource": [
+            "company",
+          ],
 				show: {
 					operation: [
-						'listCompanies',
+						'list',
 					],
 				},
 			},
@@ -122,9 +144,12 @@
         "default": 'asc',
         "description": 'Order direction (must be used with order_by)',
 			displayOptions: {
+          "resource": [
+            "company",
+          ],
 				show: {
 					operation: [
-						'listCompanies',
+						'list',
 					],
 				},
 			},
