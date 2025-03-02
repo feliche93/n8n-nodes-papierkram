@@ -9,7 +9,9 @@ export class PapierkramApi implements ICredentialType {
       displayName: 'API Token',
       name: 'apiToken',
       type': 'string',
+      typeOptions': { type: 'password' },
       default: '',
+      description: 'The API token to access the Papierkram API',
     },
   ];
 }
