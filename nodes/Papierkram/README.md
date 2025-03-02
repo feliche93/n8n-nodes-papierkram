@@ -1,6 +1,6 @@
-# n8n-nodes-papierkram
+# Papierkram Node
 
-This is an n8n community node to access the Papierkram API. 
+This is an n8n community node to access the Papierkram API.
 
 ## Authentication
 
@@ -8,8 +8,14 @@ To use this node, you need to create an API token in your Papierkram account und
 
 ## Supported Operations
 
-*   **List Companies:** Retrieves a list of companies.
+### Company
+
+*   **List Companies:** Retrieves a list of companies with pagination and ordering.
 *   **Get Company:** Retrieves a specific company by ID.
+
+## Basic Operations
+
+These operations enable you to perform automation tasks with Papierkram.
 
 ## Resources
 
