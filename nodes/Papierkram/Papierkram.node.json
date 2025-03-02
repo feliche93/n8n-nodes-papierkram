@@ -1,0 +1,134 @@
+{
+  "node": {
+    "displayName": "Papierkram",
+    "name": "papierkram",
+    "group": ["transform"],
+    "version": 1,
+    "description": "Basic Papierkram node",
+    "defaults": {
+      "name": 'Papierkram',
+    },
+    "inputs": ["main"],
+    "outputs": ["main"],
+    "credentials": [
+      {
+        "name": "papierkramApi",
+        "required": true,
+      },
+    ],
+    "properties": [
+      {
+        "displayName": 'Operation',
+        "name": 'operation',
+        "type': 'options',
+        "noDataExpression": true,
+        "options": [
+          {
+            "name": 'Get Company',
+            "value": 'getCompany',
+            "description": 'Get a company',
+            "routing": {
+              "request": {
+                "method": "GET",
+                "url": '/contact/companies/{id}',
+              }
+            }
+          },
+          {
+            "name": 'List Companies',
+            "value": 'listCompanies',
+            "description": 'List all companies',
+            "routing": {
+              "request": {
+                "method": "GET",
+                "url": '/contact/companies',
+              }
+            }
+          },
+        ],
+        "default": 'listCompanies',
+      },
+		{
+			displayName: 'Company ID',
+			name: 'companyId',
+			type: 'string',
+			default: '',
+			description: 'ID of the company to retrieve.',
+			required: true,
+			displayOptions: {
+				show: {
+					operation: [
+						'getCompany',
+					],
+				},
+			},
+		},
+      {
+        "displayName": 'Page',
+        "name": 'page',
+        "type": 'number',
+        "default": 1,
+        "description": 'Page number',
+			displayOptions: {
+				show: {
+					operation: [
+						'listCompanies',
+					],
+				},
+			},
+      },
+      {
+        "displayName": 'Page Size',
+        "name": 'pageSize',
+        "type": 'number',
+        "default": 100,
+        "description": 'Page size (1-100)',
+			displayOptions: {
+				show: {
+					operation: [
+						'listCompanies',
+					],
+				},
+			},
+      },
+      {
+        "displayName": 'Order By',
+        "name": 'orderBy',
+        "type": 'string',
+        "default": '',
+        "description": 'Order by field (must be used with order_direction)',
+			displayOptions: {
+				show: {
+					operation: [
+						'listCompanies',
+					],
+				},
+			},
+      },
+      {
+        "displayName": 'Order Direction',
+        "name": 'orderDirection',
+        "type": 'options',
+        "options": [
+          {
+            "name": 'Ascending',
+            "value": 'asc',
+          },
+          {
+            "name": 'Descending',
+            "value": 'desc',
+          },
+        ],
+        "default": 'asc',
+        "description": 'Order direction (must be used with order_by)',
+			displayOptions: {
+				show: {
+					operation: [
+						'listCompanies',
+					],
+				},
+			},
+      },
+    ],
+  },
+}
