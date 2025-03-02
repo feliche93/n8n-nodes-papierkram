@@ -1,0 +1,17 @@
+{
+  "node": {
+    "displayName": "Papierkram",
+    "name": "papierkram",
+    "group": ["community"],
+    "version": 1,
+    "description": "Consume Papierkram API"
+  },
+  "credentials": [
+    {
+      "name": "papierkramApi",
+      "required": true
+    }
+  ],
+  "inputs": ["main"],
+  "outputs": ["main"]
+}
