@@ -1,0 +1,63 @@
+{
+  "node": {
+    "displayName": "Papierkram",
+    "name": "papierkram",
+    "group": ["transform"],
+    "version": 1,
+    "description": "Describe what your node does",
+    "defaults": {
+      "name": "Papierkram",
+      "color": "#FFFFFF",
+    },
+    "inputs": ["main"],
+    "outputs": ["main"]
+  },
+  "credentials": [
+    {
+      "name": "papierkramApi",
+      "required": true
+    }
+  ],
+  "properties": [
+			{
+				displayName: 'Resource',
+				name: 'resource',
+				type: 'options',
+				options: [
+					{
+						name: 'Company',
+						value: 'company',
+						description: 'Company Resource',
+					},
+				],
+				default: 'company',
+				description: 'The resource to operate on.',
+			},
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				displayOptions: {
+					show: {
+						resource: [
+							'company',
+						],
+					},
+				},
+				type: 'options',
+				options: [
+					{
+						name: 'Get',
+						value: 'get',
+						description: 'Get a company',
+					},
+					{
+						name: 'List',
+						value: 'list',
+						description: 'List all companies',
+					},
+				],
+				default: 'get',
+				description: 'The operation to perform.',
+			},
+		],
+}
