@@ -1,63 +1,63 @@
-import { IExecuteFunctions } from 'n8n-workflow';
-import { BaseList, BaseGet, BaseOperation } from './Base';
+import { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { Papierkram } from './Papierkram';
 
-export class Papierkram implements BaseOperation {
-  baseGet: BaseGet;
-  baseList: BaseList;
-  constructor() {
-    this.baseGet = new BaseGet();
-    this.baseList = new BaseList();
-  }
-  async listCompanies(
-    this: IExecuteFunctions,
-    index: number,
-  ): Promise<any> {
-    const returnData: any[] = [];
-    const credentials = await this.getCredentials('papierkramApi');
-    const baseUrl = 'https://felixvemmer.papierkram.de/api/v1';
-    const endpoint = '/contact/companies';
+export class PapierkramDescription implements INodeType {
+  constructor(public readonly baseGet: any, public readonly baseList: any) {}
+  category: string;
+  description: string;
+  displayName: string;
+  group: string[];
+  icon: string;
+  inputs: string[];
+  name: string;
+  outputs: string[];
+  properties: INodeTypeDescription['properties'];
+  version: number;
 
-    const page = this.getNodeParameter('page', index) as number;
-    const pageSize = this.getNodeParameter('pageSize', index) as number;
-    const orderBy = this.getNodeParameter('orderBy', index) as string;
-    const orderDirection = this.getNodeParameter('orderDirection', index) as string;
+  methods = {
+    list: [
+      {
+        name: 'listCompanies',
+        value: 'listCompanies',
+      },
+    ],
+    get: [
+      {
+        name: 'getCompany',
+        value: 'getCompany',
+      },
+    ],
+  };
 
-    const qs: any = {
-        page,
-        page_size: pageSize,
-    };
+  async execute(this: IExecuteFunctions): Promise<any> {
+    const papierkram = new Papierkram();
+    const items = this.getInputData();
+    let returnData = [];
 
-    if (orderBy) {
-        qs.order_by = orderBy;
-        qs.order_direction = orderDirection
+    for (let i = 0; i < items.length; i++) {
+      try {
+        const method = this.getNodeParameter('operation', i) as string;
+
+        if (method === 'listCompanies') {
+          // Simple list operation
+          returnData = returnData.concat(await papierkram.listCompanies.call(this, i));
+        }
+
+        if (method === 'getCompany') {
+          // Simple get operation
+          returnData = returnData.concat(await papierkram.getCompany.call(this, i));
+        }
+      } catch (error) {
+        // If the error is of type string, convert it to an object with a message property
+        if (typeof error === 'string') {
+          throw new Error(error);
+        }
+
+        // If it is an object with a message property, throw it directly
+        throw error;
+      }
     }
 
-    const response = await this.baseList.run.call(this, {
-      baseUrl,
-      endpoint,
-      credentials,
-      qs,
-    });
-    returnData.push(response);
-    return returnData;
-  }
-
-  async getCompany(
-    this: IExecuteFunctions,
-    index: number,
-  ): Promise<any> {
-    const returnData: any[] = [];
-    const credentials = await this.getCredentials('papierkramApi');
-    const baseUrl = 'https://felixvemmer.papierkram.de/api/v1';
-    const companyId = this.getNodeParameter('companyId', index) as string;
-    const endpoint = `/contact/companies/${companyId}`;
-
-    const response = await this.baseGet.run.call(this, {
-      baseUrl,
-      endpoint,
-      credentials,
-    });
-    returnData.push(response);
-    return returnData;
+    return [this.helpers.returnJsonArray(returnData)];
   }
 }
